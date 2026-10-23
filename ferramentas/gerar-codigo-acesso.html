@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BloomFi — Código de acesso grátis</title>
+<style>
+:root{color-scheme:dark}body{margin:0;background:#14161b;color:#e8edf4;font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:760px;margin:0 auto;padding:28px 16px 48px}h1{margin:0 0 6px;font-size:24px}p{color:#cfd6e0}
+label{display:block;font-weight:700;margin:14px 0 6px}
+input,textarea,select{width:100%;box-sizing:border-box;background:#0f1117;color:#e8edf4;border:1px solid #3a414c;border-radius:10px;padding:10px;font:14px system-ui}
+textarea{min-height:90px;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+button{background:#0bf28b;color:#052114;border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer;font-size:15px;margin-top:14px}
+.err{color:#fb7185}
+</style></head>
+<body><main>
+<h1>🎁 Código de acesso grátis (família e amigos)</h1>
+<p>Gera um código que libera o BloomFi sem pagar. Roda só no seu computador. A pessoa cola o código no app em <i>Assinatura → Tenho um código de acesso</i>.</p>
+<label for="sec">Seu APP_SECRET (o mesmo que está no Netlify)</label><input id="sec" type="password" autocomplete="off">
+<label for="email">E-mail da pessoa</label><input id="email" type="email" placeholder="pai@email.com">
+<label for="days">Válido por quantos dias</label><input id="days" type="number" value="365" min="1" max="3650">
+<label for="plan">Plano que o código libera</label>
+<select id="plan">
+  <option value="essencial">Essencial — sem bancos conectados</option>
+  <option value="plus">Plus — até 3 bancos (você paga a Pluggy por eles)</option>
+  <option value="premium">Premium — até 6 bancos (você paga a Pluggy por eles)</option>
+</select>
+<button id="go">Gerar código</button>
+<p id="err" class="err"></p>
+<label for="out">Código (mande para a pessoa)</label><textarea id="out" readonly></textarea>
+<script>
+const enc = new TextEncoder();
+const b64u = (u8) => btoa(String.fromCharCode(...new Uint8Array(u8))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const j = (o) => b64u(enc.encode(JSON.stringify(o)));
+document.getElementById('go').onclick = async () => {
+  const secret = document.getElementById('sec').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const days = Number(document.getElementById('days').value) || 365;
+  const plan = document.getElementById('plan').value;
+  const err = document.getElementById('err'); err.textContent = '';
+  if (secret.length < 32) { err.textContent = 'APP_SECRET inválido (precisa ter pelo menos 32 caracteres).'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'E-mail inválido.'; return; }
+  const now = Math.floor(Date.now() / 1000);
+  const head = j({ alg: 'HS256', typ: 'JWT' });
+  const body = j({ typ: 'account', kind: 'gift', sub: 'gift:' + email, email, until: now + days * 86400, iat: now, plan });
+  const key = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(head + '.' + body));
+  document.getElementById('out').value = head + '.' + body + '.' + b64u(sig);
+};
+</script>
+</main></body></html>

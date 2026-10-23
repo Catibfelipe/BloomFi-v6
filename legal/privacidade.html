@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Política de Privacidade — BloomFi</title><link rel="stylesheet" href="/_legal.css"></head>
+<body><main>
+<a class="back" href="/">← Voltar ao BloomFi</a>
+<h1>Política de Privacidade do BloomFi</h1>
+<p class="meta">Última atualização: 20 de outubro de 2026 · Controlador: <mark>[SEU NOME OU RAZÃO SOCIAL]</mark>, <mark>[CPF/CNPJ]</mark>, <mark>[ENDEREÇO]</mark> · Encarregado (DPO): <mark>[NOME]</mark>, <mark>[E-MAIL]</mark></p>
+<p class="note">Faltam os dados do responsável pelo BloomFi (campos destacados): cadastre LEGAL_NAME, LEGAL_ID, LEGAL_ADDRESS e SUPPORT_EMAIL nas variáveis do Netlify e publique de novo. Este aviso some sozinho. Recomendamos a revisão de um advogado.</p>
+
+<h2>1. Princípio: só você abre suas finanças</h2>
+<p>Suas transações, contas, cartões, orçamentos, metas, investimentos e conversas com o Wally ficam <strong>no seu aparelho</strong>, sempre <strong>criptografados (AES-256-GCM)</strong> (o que você decidir compartilhar num espaço de família e as perguntas ao Wally com IA, se você ligar esses recursos, seguem as regras do item 3). Para aparecerem iguais no celular e no computador, uma cópia vai para os nossos servidores <strong>criptografada de ponta a ponta</strong>: a chave nasce da sua senha, no seu aparelho, e nunca chega até nós. <strong>Nós não conseguimos ler suas finanças</strong>, nem se quiséssemos, nem se alguém copiasse nossos servidores.</p>
+
+<h2>2. Dados da sua conta</h2>
+<ul>
+<li><strong>Nome e e-mail:</strong> guardados criptografados nos nossos servidores. Para achar sua conta pelo e-mail usamos uma impressão digital dele (um código derivado com chave secreta), não o e-mail em texto.</li>
+<li><strong>Senha:</strong> <strong>nunca é enviada</strong>. O app a transforma em chaves no próprio aparelho (Argon2id) e envia só um valor derivado, que guardamos novamente embaralhado (scrypt). Esse valor não permite descobrir a senha nem abrir seus dados.</li>
+<li><strong>Chave de recuperação:</strong> é mostrada só para você, uma vez. Guardamos apenas uma cópia da chave dos seus dados trancada por ela, que só abre com a chave de recuperação.</li>
+<li><strong>Verificação em duas etapas (opcional):</strong> guardamos o segredo do app autenticador criptografado e os códigos reserva apenas embaralhados.</li>
+<li><strong>PIN de desbloqueio (opcional):</strong> o PIN não é enviado. Guardamos um segredo por aparelho que só é devolvido quando o app prova que o PIN está certo (10 erros e ele é apagado). Assim, uma cópia do aparelho não serve para descobrir o PIN.</li>
+<li><strong>Aparelhos e atividade de segurança:</strong> para você ver onde sua conta está aberta e desconectar um aparelho à distância, guardamos o tipo do aparelho e do navegador, a cidade e o país aproximados (calculados pelo provedor de hospedagem a partir do endereço IP), o horário do último uso e um histórico das últimas 60 ações de segurança (entradas, trocas de senha ou e-mail, verificação em duas etapas, aparelhos removidos).</li>
+</ul>
+
+<h2>3. O que mais passa pelos nossos servidores</h2>
+<ul>
+<li><strong>Cópia sincronizada:</strong> criptografada de ponta a ponta, como explicado no item 1. Só os seus aparelhos abrem.</li>
+<li><strong>Gastos do celular (opcional):</strong> quando você ativa a captura de pagamentos (Apple Pay, Google Pay, avisos do banco), o seu celular envia para o seu link pessoal o valor, o local, o nome ou final do cartão e o texto do aviso. A conexão é protegida (HTTPS) e, ao chegar, cada aviso é <strong>criptografado na hora para a chave da sua conta</strong>, que só os seus aparelhos têm. Os avisos ficam guardados assim até um aparelho seu recebê-los (no máximo 60 dias). O link pessoal funciona como uma senha: não o compartilhe, e você pode apagá-lo quando quiser.</li>
+<li><strong>Open Finance (opcional):</strong> ao conectar um banco, contas, transações e investimentos são obtidos pela Pluggy com o seu consentimento e repassados <strong>diretamente ao seu aparelho</strong>. Nossos servidores só intermediam a requisição e <strong>não guardam</strong> esses dados; guardam apenas o identificador de cada conexão (sem nome de banco, saldo ou movimentação), para contar as conexões do seu plano e encerrar as que o plano não cobre mais.</li>
+<li><strong>Espaço compartilhado — Família e casal (opcional):</strong> se você criar um espaço ou entrar em um, guardamos quem participa de cada espaço, o nome de cada participante (mostrado às outras pessoas do espaço) e, quando você pede para entrar, o seu nome e o seu e-mail parcialmente oculto, mostrados a quem é dono do espaço para aprovar. O que for compartilhado (contas, cartões, metas, orçamentos e os lançamentos deles) fica numa cópia <strong>criptografada de ponta a ponta</strong> com uma chave do espaço que só os aparelhos das pessoas do espaço têm: <strong>nós não conseguimos ler</strong>, mas <strong>as pessoas do espaço veem e podem editar</strong> o que é compartilhado. O segredo do link de convite fica depois do "#" do endereço, parte que o navegador não envia aos nossos servidores; guardamos apenas um resumo (hash) que confere o convite.</li>
+<li><strong>Wally com IA (opcional):</strong> a inteligência artificial do Wally roda <strong>inteira no seu aparelho</strong>. Suas perguntas, as respostas e os seus números <strong>não são enviados</strong> a nós nem a ninguém. Para ligar o recurso, o app baixa o modelo de IA (arquivos públicos, de código aberto) do <strong>Hugging Face</strong> e do <strong>GitHub</strong>, que recebem apenas o pedido de download (como qualquer site recebe o seu endereço IP), nunca dados seus. Você pode desligar e apagar o modelo a qualquer momento (Wally ou Ajustes).</li>
+<li><strong>Falar com o Wally (opcional):</strong> quando você toca no microfone, quem transforma a sua fala em texto é o seu navegador ou sistema (por exemplo, o Google no Chrome e a Apple no Safari, que podem processar o áudio nos servidores deles, como no ditado do teclado). O BloomFi recebe só o texto, que fica no seu aparelho como qualquer mensagem do chat. As respostas em voz alta usam a voz do próprio aparelho. <strong>Nós não gravamos nem recebemos áudio.</strong></li>
+<li><strong>Assinatura:</strong> o identificador de cliente no Stripe e o seu e-mail, para cobrar e saber qual plano está ativo (e quantas conexões com bancos ele permite). Os dados do cartão são tratados só pelo Stripe.</li>
+<li><strong>E-mails:</strong> códigos de confirmação e avisos de segurança (novo acesso, senha ou e-mail trocados) são enviados pela Resend.</li>
+<li><strong>Lembretes e alertas (opcional):</strong> guardamos o endereço de notificação de cada aparelho e os horários dos lembretes, com textos curtos (por padrão sem nomes nem valores). Eles são entregues pelo serviço do seu navegador ou sistema (Google, Apple, Mozilla ou Microsoft) e param quando o aparelho sai da conta.</li>
+<li><strong>Senhas vazadas:</strong> ao criar ou trocar a senha, o app consulta o serviço “Have I Been Pwned” enviando só os 5 primeiros caracteres de um resumo (hash) da senha, direto do seu aparelho. A senha não sai do aparelho e nós não recebemos nada.</li>
+<li><strong>Registros técnicos e limites de tentativas:</strong> endereço IP e horário das requisições ficam com o provedor de hospedagem por segurança; contadores de tentativas (para bloquear quem tenta adivinhar senhas ou códigos) usam identificadores embaralhados e duram poucas horas ou dias.</li>
+</ul>
+
+<h2>4. Bases legais (art. 7º da LGPD)</h2>
+<p>Execução de contrato (conta, sincronização, espaços compartilhados que você escolhe usar, assinatura e funcionamento do serviço), consentimento (Open Finance e captura de gastos do celular), cumprimento de obrigação legal (registros fiscais de cobrança) e legítimo interesse (segurança da conta, histórico de acessos e prevenção a fraudes).</p>
+
+<h2>5. Com quem compartilhamos</h2>
+<p>Somente com operadores necessários ao serviço: <strong>Netlify</strong> (hospedagem e armazenamento dos dados criptografados), <strong>Stripe</strong> (pagamentos), <strong>Pluggy</strong> (Open Finance), <strong>Resend</strong> (e-mail), os serviços de notificação do seu navegador ou sistema e, se você usar o microfone, o reconhecimento de fala do seu navegador ou sistema (Google ou Apple). O que você compartilha num espaço de família fica visível às pessoas desse espaço, que você convidou ou cujo convite aceitou. Alguns ficam fora do Brasil e operam com salvaguardas contratuais. Os apps de automação do seu celular (Atalhos da Apple, MacroDroid) rodam no seu aparelho e seguem as políticas dos seus fabricantes. Não vendemos dados nem os usamos para publicidade.</p>
+
+<h2>6. Retenção</h2>
+<ul>
+<li><strong>Conta e cópia criptografada:</strong> até você excluir a conta (Ajustes → Excluir conta). A exclusão apaga a conta, os aparelhos conectados, a cópia sincronizada, os gastos do celular ainda não recebidos, os lembretes e as conexões com bancos, e cancela a assinatura.</li>
+<li><strong>Cadastro não confirmado:</strong> sem o código do e-mail, nada vira conta; os dados do cadastro somem quando o código expira.</li>
+<li><strong>Aparelhos desconectados:</strong> o registro da sessão encerrada fica até 30 dias, só para o aparelho saber por que saiu.</li>
+<li><strong>Segredos do PIN:</strong> até você desligar o PIN, excluir a conta ou ficar 400 dias sem usá-lo.</li>
+<li><strong>Espaços compartilhados:</strong> a cópia criptografada do espaço fica até o dono apagá-lo. Se você sair (ou for retirado), deixa de ter acesso e o que era compartilhado sai do seu aparelho; o que você lançou nas contas compartilhadas continua com as outras pessoas. Convites não usados expiram em 7 dias. Se quem é dono excluir a conta, o espaço passa para a pessoa mais antiga dele.</li>
+<li><strong>Wally com IA:</strong> nada fica conosco; o modelo e a conversa ficam só no seu aparelho.</li>
+<li><strong>Dados no aparelho:</strong> até você sair da conta (o app apaga tudo daquele aparelho) ou apagar os dados.</li>
+<li><strong>Cobrança:</strong> registros mantidos pelo Stripe pelo prazo exigido em lei.</li>
+</ul>
+
+<h2>7. Seus direitos (art. 18 da LGPD)</h2>
+<p>Você pode pedir confirmação, acesso, correção, anonimização, portabilidade e eliminação dos dados que tratamos, e revogar consentimentos, pelo e-mail <mark>[E-MAIL DO ENCARREGADO]</mark>. No próprio app você exporta seus dados (Ajustes → Fazer backup), vê os aparelhos e o histórico de segurança, desconecta aparelhos e exclui a conta.</p>
+
+<h2>8. Segurança</h2>
+<p>Criptografia de ponta a ponta, senha que nunca é enviada (Argon2id no aparelho), verificação em duas etapas, alerta por e-mail a cada novo acesso, código por e-mail quando há muitas tentativas de senha errada, sessões que expiram e detectam cópia, desconexão e apagamento à distância, PIN conferido pelo servidor, biometria do aparelho, bloqueio automático, backups protegidos por senha, conexões HTTPS e cabeçalhos de segurança. Nenhum sistema é 100% seguro; em caso de incidente relevante, comunicaremos os titulares e a ANPD.</p>
+
+<h2>9. Crianças</h2>
+<p>O BloomFi não é destinado a menores de 18 anos.</p>
+
+<h2>10. Contato</h2>
+<p><mark>[E-MAIL DE SUPORTE]</mark> · <mark>[SEU NOME OU RAZÃO SOCIAL]</mark>, <mark>[ENDEREÇO]</mark></p>
+</main></body></html>

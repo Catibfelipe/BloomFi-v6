@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BloomFi — Gerar chaves do servidor</title>
+<style>
+:root{color-scheme:dark}body{margin:0;background:#14161b;color:#e8edf4;font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:760px;margin:0 auto;padding:28px 16px 48px}h1{margin:0 0 6px;font-size:24px}p{color:#cfd6e0}
+.box{background:#1b1f27;border:1px solid #3a414c;border-radius:12px;padding:12px;margin:12px 0}
+label{display:block;font-weight:700;margin-bottom:6px;color:#0bf28b}
+textarea{width:100%;box-sizing:border-box;min-height:70px;background:#0f1117;color:#e8edf4;border:1px solid #3a414c;border-radius:10px;padding:10px;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+button{background:#0bf28b;color:#052114;border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer;font-size:15px}
+button.copy{background:#262b35;color:#e8edf4;padding:7px 12px;font-size:13px;margin-top:6px}
+.warn{background:#2b1a10;border:1px solid rgba(245,158,11,.5);color:#ffe7bd;border-radius:12px;padding:12px}
+</style></head>
+<body><main>
+<h1>🦉 Gerar chaves do servidor BloomFi</h1>
+<p>Esta página roda só no seu computador (nada é enviado para a internet). Gere as chaves <b>uma única vez</b> e cole cada uma no Netlify em <i>Site configuration → Environment variables</i>.</p>
+<p class="warn">Guarde as chaves num lugar seguro (ex.: gerenciador de senhas) e faça uma cópia. Não mande para ninguém. <b>Nunca troque o APP_SECRET depois do lançamento:</b> ele protege as contas, e sem ele ninguém consegue entrar. Se trocar a LICENSE_PRIVATE_JWK, o app pede uma licença nova sozinho; se trocar a VAPID_PRIVATE_JWK, cada pessoa liga os lembretes de novo.</p>
+<button id="go">Gerar chaves</button>
+<div id="out" hidden>
+  <div class="box"><label>APP_SECRET</label><textarea id="s" readonly></textarea><button class="copy" data-t="s">Copiar</button></div>
+  <div class="box"><label>LICENSE_PRIVATE_JWK</label><textarea id="j" readonly></textarea><button class="copy" data-t="j">Copiar</button></div>
+  <div class="box"><label>VAPID_PRIVATE_JWK (lembretes de contas)</label><textarea id="v" readonly></textarea><button class="copy" data-t="v">Copiar</button></div>
+</div>
+<script>
+const b64u = (u8) => btoa(String.fromCharCode(...u8)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+document.getElementById('go').onclick = async () => {
+  const sec = new Uint8Array(48); crypto.getRandomValues(sec);
+  const pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+  const jwk = await crypto.subtle.exportKey('jwk', pair.privateKey);
+  document.getElementById('s').value = b64u(sec);
+  document.getElementById('j').value = JSON.stringify(jwk);
+  const vpair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+  document.getElementById('v').value = JSON.stringify(await crypto.subtle.exportKey('jwk', vpair.privateKey));
+  document.getElementById('out').hidden = false;
+};
+document.querySelectorAll('.copy').forEach((btn) => btn.onclick = async () => {
+  const el = document.getElementById(btn.dataset.t);
+  try { await navigator.clipboard.writeText(el.value); btn.textContent = 'Copiado ✓'; } catch { el.select(); btn.textContent = 'Selecionado — use Ctrl/Cmd+C'; }
+});
+</script>
+</main></body></html>

@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-artifact
+.env
+.netlify
+.dados-locais
+.dados-teste
+.dados-migra
+*.log
+.DS_Store
